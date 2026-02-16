@@ -1,0 +1,216 @@
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #0b1220;
+  background: #f6f8fc;
+  line-height: 1.5;
+}
+
+img { max-width: 100%; display: block; }
+
+.page {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 28px 0 44px;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 52px 0;
+  color: white;
+
+  /* Intel-ish blue gradient background */
+  background:
+    radial-gradient(1200px 500px at 20% 10%, rgba(255,255,255,0.20), transparent 60%),
+    linear-gradient(120deg, #0068b5, #003c71);
+}
+
+.hero-content {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+}
+
+.hero-logo {
+  width: 110px;
+  height: auto;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.8rem, 2.6vw, 3rem);
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  margin: 0;
+  max-width: 70ch;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+/* ---------- Timeline Layout ---------- */
+.timeline {
+  display: flex;
+  gap: 18px;
+  padding: 10px 4px 18px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* LevelUp: Scroll Snap */
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 10px;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline::-webkit-scrollbar { height: 10px; }
+.timeline::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.18);
+  border-radius: 999px;
+}
+.timeline::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- Cards ---------- */
+.card {
+  flex: 0 0 320px;
+  background: white;
+  border: 1px solid rgba(0, 60, 113, 0.14);
+  border-radius: 16px;
+  padding: 14px;
+  scroll-snap-align: start;
+
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+
+  /* LevelUp: Transitions + Transform */
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:focus-visible {
+  box-shadow: 0 0 0 4px rgba(0, 104, 181, 0.25), 0 8px 18px rgba(0,0,0,0.06);
+  border-color: rgba(0, 104, 181, 0.55);
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.10);
+  border-color: rgba(0, 104, 181, 0.35);
+}
+
+.card-top {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.year {
+  display: inline-block;
+  width: fit-content;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 104, 181, 0.10);
+  color: #003c71;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.card-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 10px 0 10px;
+}
+
+/* Blue border for the 2020 card image only */
+.timeline > .card:nth-child(6) .card-img {
+  border: 3px solid #0068b5;
+}
+
+.card-summary {
+  margin: 0 0 10px;
+  color: rgba(11, 18, 32, 0.92);
+  font-size: 0.98rem;
+}
+
+/* ---------- Hover Reveal (extra details) ---------- */
+.card-content {
+  /* This is the original card content we blur on hover */
+  transition: filter 220ms ease, transform 220ms ease;
+}
+
+.card:hover .card-content,
+.card:focus-within .card-content {
+  filter: blur(3px);
+  transform: scale(1.02);
+}
+
+.card-more {
+  /* Centered overlay that appears on hover */
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px;
+  background: rgba(0, 104, 181, 0.75);
+  border-radius: 12px;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.card:hover .card-more,
+.card:focus-within .card-more {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-more p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.95rem;
+}
+
+/* ---------- Hint ---------- */
+.hint {
+  margin: 14px 0 0;
+  color: rgba(11, 18, 32, 0.70);
+  font-size: 0.95rem;
+}
+
+/* ---------- Responsive: stack vertically on small screens ---------- */
+@media (max-width: 720px) {
+  .timeline {
+    flex-direction: column;
+    overflow: visible;
+    scroll-snap-type: none;
+    padding: 0;
+  }
+
+  .card {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .card-img {
+    height: 190px;
+  }
+}
+
